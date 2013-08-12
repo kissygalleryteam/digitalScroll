@@ -1,0 +1,14 @@
+{
+    "name": "digitalScroll",
+    "version": "1.0",
+    "desc": "数字滚动组件",
+    "cover": "",
+    "tag":"",
+    "author": {
+        "name": "函谷",
+        "email": "hangu.mh@taobao.com",
+        "page": ""
+    },
+    "type": "kissy-gallery",
+    "type-url": "http://gallery.kissyui.com/guide"
+}

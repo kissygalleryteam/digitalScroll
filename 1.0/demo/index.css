@@ -1,0 +1,66 @@
+@CHARSET "utf-8";
+/*reset*/
+html{color:#333;background:#fff}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0}
+table{border-collapse:collapse;border-spacing:0}
+fieldset,img{border:0}
+address,caption,cite,code,dfn,em,th,var,optgroup{font-style:normal;font-weight:400}
+li{list-style:none}
+caption{text-align:left}
+abbr,acronym{border:0;font-variant:normal}
+sup{vertical-align:text-top}
+sub{vertical-align:text-bottom}
+input,textarea,select,button,option{font-family:inherit;font-size:inherit;font-weight:inherit}
+legend{color:#000}
+q:before,q:after{content:''}
+body{font:12px/1.5 tahoma,"microsoft yahei","\5FAE\8F6F\96C5\9ED1";}
+a{color:#36c;text-decoration:none;}
+a:hover{color:#f60;text-decoration:underline;}
+img{vertical-align:middle;}
+.clearfix:after {content:".";display:block;height:0;clear:both;visibility:hidden}.clearfix{display:inline-block}* html .clearfix {height:1%}.clearfix {display:block}
+
+body{padding:20px;}
+hr{border:1px solid #8CACBB;}
+h1{font-size:40px;}
+h2{font-size:20px;}
+pre{border-left:4px solid gray;padding-left:10px;background:#eee;}
+pre code {font-size:0.8125em;line-height:1.4em;padding:0px;font-family:Consolas,Inconsolata,'Bitstream Vera Sans Mono',Menlo, Monaco,'Andale Mono','Courier New',monospace;}
+button{padding:3px 8px;border:1px solid #ccc;background:#eee;border-radius:3px;cursor:pointer;margin-top:10px;display:inline-block;}
+label{display:inline-block;height:24px;line-height:24px;width:100px;text-align:right;}
+input{width:200px;}
+.content{padding:10px;}
+.demo{margin:10px;}
+.hidden{display:none;}
+
+/*demo1*/
+#scroll-demo-1 ul{width:171px;height:24px;border:solid #A4C58D;border-width:2px 1px;}
+#scroll-demo-1 ul li{float:left;width:19px;height:24px;background:url(http://img01.taobaocdn.com/tps/i1/T1Bo5XFfXbXXc5zYYl-19-480.png) 0 0 no-repeat;}
+
+/*demo2*/
+#scroll-demo-2 ul{width:90px;height:24px;}
+#scroll-demo-2 ul li{float:left;width:18px;height:24px;background:url(http://img02.taobaocdn.com/tps/i2/T1.CR7Fn0hXXXfOjfL-36-480.png) 0 0 no-repeat;}
+#scroll-demo-2 ul li.decade{background-position:0 0;}
+#scroll-demo-2 ul li.unit{background-position:-18px 0;}
+#scroll-demo-2 ul li.d{background-position:0 -287px;}
+
+/*demo3*/
+#scroll-demo-3{width:990px;height:325px;background:url(http://img04.taobaocdn.com/tps/i4/T1C10MFadiXXciFjDh-990-325.png) 0 0 no-repeat;_background:none;_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://img02.taobaocdn.com/tps/i2/T1Q.XJFatXXXciFjDh-990-325.png');}
+.game{position:relative;top:96px;left:176px;width:600px;height:75px;}
+.logo-ssq{width:25px;height:62px;float:left;margin:6px 5px 0 4px;background:url(http://img03.taobaocdn.com/tps/i3/T1fsBwFc8hXXa9oRvy-500-500.png) 0 -400px no-repeat;}
+.game ul{float:left;}
+.game li{width:77px;height:75px;background:url(http://img03.taobaocdn.com/tps/i3/T1fsBwFc8hXXa9oRvy-500-500.png) 0 -300px no-repeat;float:left;}
+.game li.exp{background-position:-160px -300px;}
+.game li.first{background-position:-80px -300px;}
+.game li.last{background-position:-240px -300px;}
+.game li span{display:block;width:77px;height:75px;background:url(http://img03.taobaocdn.com/tps/i3/T17.4mFdVhXXaynojr-160-3198.png) 0 0 no-repeat;_background:url(../img/number2.png) 0 0 no-repeat;}
+.game li.exp span{background-position:-80px 0;}
+.game li.exp span{_background-position:-160px 0;}
+.game li.first span{_background-position:-80px 0;}
+.game li.last span{_background-position:-240px 0;}
+#trigger{width:35px;height:52px;background:url(http://img03.taobaocdn.com/tps/i3/T1fsBwFc8hXXa9oRvy-500-500.png) -400px -300px no-repeat;position:relative;top:-4px;left:582px;cursor:pointer;_background:none;_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://img01.taobaocdn.com/tps/i1/T1bvRhFc8hXXcHwr2e-35-52.png');}
+#trigger.active{background:url(http://img03.taobaocdn.com/tps/i3/T1fsBwFc8hXXa9oRvy-500-500.png) -350px -300px no-repeat;top:42px;_background:none;_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://img04.taobaocdn.com/tps/i4/T1qIxJFcxaXXXV4r2e-35-54.png');}
+
+/*demo2*/
+#scroll-demo-4 ul{margin:10px;}
+#scroll-demo-4 ul li{float:left;width:18px;height:24px;background:url(http://img02.taobaocdn.com/tps/i2/T1.CR7Fn0hXXXfOjfL-36-480.png) -18px 0 no-repeat;}
+#scroll-demo-4 button{margin:10px 0 20px 40px}

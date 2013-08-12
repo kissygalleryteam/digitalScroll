@@ -1,0 +1,283 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>digitalScroll的demo</title>
+    <link rel="stylesheet" href="index.css"/>
+    <script src="http://a.tbcdn.cn/s/kissy/1.3.0/kissy-min.js" charset="utf-8"></script>
+    <script>
+	    var S = KISSY;
+	    if (S.Config.debug) {
+	        var srcPath = "../../../";
+	        S.config({
+	            packages:[
+	                {
+	                    name:"gallery",
+	                    path:srcPath,
+	                    charset:"utf-8",
+	                    ignorePackageNameInUri:true
+	                }
+	            ]
+	        });
+	    }
+    </script>
+</head>
+<body>
+<h1>digitalScroll的demo</h1>
+
+<hr/>
+
+<div class="content">
+	<h2>百度知道首页数字滚动</h2>
+	<div id="scroll-demo-1" class="demo">
+		<ul class="clearfix">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</div>
+	<script>
+		S.use('dom, gallery/digitalScroll/1.0/index', function (S, DOM, DigitalScroll) {
+	    	var data = 233794995, ds;
+	    	
+	    	ds = new DigitalScroll({
+	    		data: String(data).split(''),
+	    		nodeList: DOM.query('#scroll-demo-1 li'),
+ 		 		durationList: 0.3
+   			});
+
+			setInterval(function() {
+ 				var rand = Math.floor(Math.random() * 100);
+ 				data += rand;
+ 				ds.reset(String(data).split('')).start();
+			}, 1500);
+	    });
+	</script>
+</div>
+
+<hr/>
+
+<div class="content">
+	<h2>数字秒表效果</h2>
+	<div id="scroll-demo-2" class="demo">
+		<ul class="clearfix">
+			<li class="t decade"></li>
+			<li class="t unit"></li>
+			<li class="d"></li>
+			<li class="t decade"></li>
+			<li class="t unit"></li>
+		</ul>
+		<button id="demo2-trigger">begin</button>
+	</div>
+	<script>
+		S.use('dom, event, gallery/digitalScroll/1.0/index', function (S, DOM, EVENT, DigitalScroll) {
+	    	var ds = new DigitalScroll({
+	    		nodeList: DOM.query('#scroll-demo-2 li.t'),
+ 		 		durationList: 0.3,
+ 		 		rangeList: [6, 10, 6, 10]
+	    	});
+			
+	    	var bithandle = function(n) {
+    			n = String(n);
+    			if (n.length >= 2) {
+    				return n.slice(-2).split('');
+    			} 
+    			return ['0', n];
+    		};
+    		
+    		var showAnim = function(data) {
+    			ds.reset(data).start();
+    		};
+	    	EVENT.on('#demo2-trigger', 'click', function() {
+	    		var time = new Date(),  m = time.getMinutes(), s = time.getSeconds();
+	    		showAnim(bithandle(m).concat(bithandle(s)));
+	    		setInterval(function() {
+	 				s ++;
+	 				if (s == 60) {
+	 					m ++;
+	 					s = 0;
+	 				}
+		    		showAnim(bithandle(m).concat(bithandle(s)));
+				}, 1000);
+	    	});
+			
+	    });
+	</script>
+</div>
+
+<hr/>
+
+<div class="content">
+	<h2>双色球摇奖器</h2>
+	<div id="scroll-demo-3" class="demo">
+		<div class="game">
+			<div class="logo-ssq"></div>   
+			<ul class="clearfix">   
+				<li class="first"><span></span></li>
+				<li><span></span></li>
+				<li><span></span></li>
+				<li><span></span></li>
+				<li><span></span></li>
+				<li><span></span></li>
+				<li class="exp last"><span></span></li>
+			</ul>
+			<div class="trigger" id="trigger"></div>
+		</div>
+	</div>
+	<script>
+		S.use('dom, event, gallery/digitalScroll/1.0/index', function (S, DOM, EVENT, DigitalScroll) {
+			
+			var baseBallRandom = function(num, max){
+				var a = [], r;
+				
+				for(var i = 0; i < num; i++){
+					r = Math.ceil(Math.random() * max);
+					//去重
+					if(S.indexOf(a, r) >= 0){
+						i--;
+						continue;
+					}
+					a[a.length] = r;
+				}
+				return a;
+			};
+			
+			var random = function(){
+				var data = baseBallRandom(6, 33).sort(function(a, b){return a - b}).concat(baseBallRandom(1, 16));
+				S.log(data);
+				return data;
+			};
+			
+			
+			// 机选一注
+			var slot = new DigitalScroll({
+				data: random(),
+				nodeList: DOM.query('#scroll-demo-3 span'),  // 动画节点列表
+				durationList: [0.5, 0.8, 1.1, 1.4, 1.7, 2.0, 2.3], // 动画时间列表
+				uHeight: 78,    // 单元高度
+				fixed: 78,     // 位置修正
+				transition: {    // 过渡效果
+					minY: 2808,      // 过渡图片最小高度
+					maxY: 3120,      // 过渡图片最大高度
+					minRepeat: 3,   // 最少执行循环数
+					maxRepeat: 10,  // 最多执行循环次数
+					duration: 0.3   // 每个循环时间 
+				}
+			});
+			
+			// 鼠标落下
+			var trigger = DOM.get('#trigger');
+    		EVENT.on(trigger, 'mousedown', function() {  // 鼠标落下
+    			if (! slot.isRunning()) {
+    				slot.reset(random()).start();    // 开始执行动画
+    				DOM.addClass(trigger, 'active');  
+    			}
+    		});
+    		
+    		// 鼠标抬起
+    		EVENT.on(document.body, 'mouseup', function() {  // 鼠标落下
+    			if (DOM.hasClass(trigger, 'active')) {
+    				slot.stop();   // 结束
+	    			DOM.removeClass(trigger, 'active'); 
+    			}
+    		});
+		});
+	</script>
+</div>
+
+<hr/>
+
+<div class="content">
+	<h2>自定义数据</h2>
+	<div id="scroll-demo-4" class="demo">
+		<ul class="clearfix">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<div id="init-box">
+			<h3>初始化条件：</h3>
+			<label>初始数据：</label><input type="text" value="140253" maxlength="6" id="data"><label>自动执行：</label><input type="checkbox"  checked="checked" id="auto"><label>延时时间：</label><input type="text" value="0.1" id="delay"> <br/>
+			<label>动画时间列表：</label><input type="text" value="0.3,0.6,0.9,1.2,1.5,1.8" id="durationList"><br/>
+			<label>延时时间列表：</label><input type="text" value="0,0,0,1,1,1" id="delayList"><br/>
+			<label>单元高度：</label><input type="text" value="24" id="height"><br/>
+			<label>动画效果：</label><input type="text" value="Bounce.easeOut" id="easing"><br/>
+			<label>高度修正：</label><input type="text" value="0" id="fixed"><br/>
+			<button id="demo4-trigger-init">初始化</button>
+		</div>
+		<div id="reset-box" class="hidden">
+			<h3>重设数据：</h3>
+			<label>重设数据：</label><input type="text" value="" id="resetdata" maxlength="6"><br/>
+			<button id="demo4-trigger-reset">确认</button>
+			<button id="demo4-trigger-destroy">销毁</button>
+		</div>
+		<script>
+			S.use('dom, event, gallery/digitalScroll/1.0/index', function (S, DOM, EVENT, DigitalScroll) {
+				var ds = null,
+					box1 = DOM.get('#init-box'),
+					box2 = DOM.get('#reset-box');
+				
+				// init
+				EVENT.on('#demo4-trigger-init', 'click', function(e) {
+		    		var data = DOM.val('#data'),
+		    			auto = DOM.attr('#auto', 'checked'),
+		    			delay = DOM.val('#delay'),
+		    			durationList = DOM.val('#durationList'),
+		    			delayList = DOM.val('#delayList'),
+		    			height = DOM.val('#height'),
+		    			easing = DOM.val('#easing'),
+		    			fixed = DOM.val('#fixed');
+		    		ds = new DigitalScroll({
+						data: data.split(''),
+						exec: {
+							auto: auto,
+							delay: Number(delay)
+						},
+						nodeList: DOM.query('#scroll-demo-4 li'),  // 动画节点列表
+						durationList: durationList.split(','), // 动画时间列表
+						delayList: delayList.split(','), // 动画时间列表
+						uHeight: Number(height),    // 单元高度
+						fixed: Number(fixed)     // 位置修正
+					});
+		    		
+		    		ds.on('error', function(e) {
+		    			S.log(e.msg);
+		    		});
+
+		    		ds.on('reset', function(e) {
+		    			var _old = e.oldVal.join(''),
+		    				_new = e.newVal.join('');
+		    			ds.start((_new - _old) < 0);
+		    		});
+		    		DOM.hide(box1);
+		    		DOM.show(box2);
+		    	});
+				
+				// reset
+				EVENT.on('#demo4-trigger-reset', 'click', function() {
+		    		var data = DOM.val('#resetdata');
+		    		ds.reset(data.split(''));
+		    	});
+				
+				// destroy
+				EVENT.on('#demo4-trigger-destroy', 'click', function() {
+		    		ds.destroy();
+		    		ds = null;
+		    		DOM.hide(box2);
+		    		DOM.show(box1);
+		    	});
+		    });
+		</script>
+	</div>
+</div>
+</body>
+</html>
