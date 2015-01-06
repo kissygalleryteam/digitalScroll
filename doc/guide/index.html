@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>digitalScroll</title>
+    <link rel="stylesheet" href="http://cdn.staticfile.org/twitter-bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://docs.kissyui.com/1.4/source/guideline/templates/assets/com-prettify.css">
+    <link rel="stylesheet" href="http://docs.kissyui.com/1.4/source/guideline/templates/assets/com.css">
+    <script src="http://cdn.staticfile.org/jquery/2.1.1-rc2/jquery.min.js"></script>
+    <script src="http://cdn.staticfile.org/twitter-bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="http://cdn.staticfile.org/prettify/r298/prettify.min.js"></script>
+    <script src="http://g.tbcdn.cn/kissy/k/1.4.8/seed-min.js" data-config="{combine:true}"></script>
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+    <div id="header"><a href="http://docs.kissyui.com/" class="logo">kissy</a>
+      <nav><a href="http://docs.kissyui.com/1.4/docs/html/coms.html">优秀组件推荐</a></nav>
+    </div>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3 bs-docs-sidebar">
+          <ul data-spy="affix" data-offset-top="0" class="nav nav-list bs-docs-sidenav"></ul>
+        </div>
+        <div class="span9 bs-docs-content">
+          <h1 data-id="undefined" class="title">digitalScroll</h1>
+          <p class="author-wrapper"><span>组件有问题？旺旺联系作者：</span><a href="https://github.com/alvis-m" target="_blank" data-name="函谷" class="author"><img src="https://avatars.githubusercontent.com/u/2010290?v=2&amp;s=60" alt="函谷"></a><span class="author-name">函谷</span>
+          </p>
+          <div class="common-link"><a href="../demo/index.html" target="_blank" class="demo">示例</a><a href="https://github.com/kissygalleryteam/digitalScroll" target="_blank" class="source">源码</a></div>
+          <p class="com-info"><span class="info-label">View</span><span data-com="digitalScroll" class="J_View">460</span></p>
+          <p class="com-info"><span class="info-label">kissy版本</span><span>1.4.X</span>
+          </p><h2 id="-">综述</h2>
+<p>（作者：函谷，版本：2.0.0）</p>
+<p>digitalScroll是利用改变背景的图片位置实现的数字滚动组件，主要用来展示一些数字的动态效果。</p>
+<p>digitalScroll的动画效果是基于<a href="http://kg.kissyui.com/layer-anim/2.0.0/guide/index.html">LayerAnim</a>实现的。</p>
+<h2 id="-">演示</h2>
+<p><a href="http://kg.kissyui.com/digitalScroll/2.0.0/demo/index.html">查看Demo</a></p>
+<h2 id="-broswer-support-">浏览器兼容性（Broswer Support）</h2>
+<p>兼容所有主流浏览器：</p>
+<ul>
+<li>Chrome</li>
+<li>InternetExplorer 6-9</li>
+<li>Firefox</li>
+<li>Safari</li>
+</ul>
+<h2 id="-">实现原理</h2>
+<p>digitalScroll是通过改变背景图片的backgroundPositionY的值来实现数字的滚动动画效果的。目前支持两种模式：循环模式和过渡模式。</p>
+<ul>
+<li>循环模式：原理很简单，就不赘述了。</li>
+<li>过渡模式：通过循环播放一段模糊效果的图片实现过渡的效果。可以设置最少循环次数。保证过渡动画的持续时间，让用户一定能看到过渡的效果。也可以设置最大的循环次数，执行完毕后自动停止。开发者也可调用stop方法主动停止过渡动画，显示最终结果。例如<a href="http://kg.kissyui.com/digitalScroll/2.0.0/demo/index.html">Demo</a>中的双色球摇奖器。</li>
+</ul>
+<p><strong>需要注意的是：</strong></p>
+<ul>
+<li>所有数字的背景图片必须有相同的backgroundPostionX，即在图片中必须排成一列</li>
+<li>在循环模式中为了不出现跳帧的现象，需要将图片循环一遍。查看<a href="http://img01.taobaocdn.com/tps/i1/T1u2ioXpJhXXbYQlri-18-480.png">实例图片</a></li>
+<li>在过渡模式中，过渡的图片需要与数字保持相同的backgroundPostionX。查看<a href="http://img03.taobaocdn.com/tps/i3/T17.4mFdVhXXaynojr-2.0.0-3198.png">实例图片</a></li>
+</ul>
+<h2 id="-">使用手册</h2>
+<pre><code class="lang-javascript">S.use(&#39;kg/digitalScroll/2.0.0/index&#39;, function (S, DigitalScroll) {
+{
+    ds = new DigitalScroll({
+        data: [1,2,3,4,5,6],                          // 初始化数据
+        nodeList: nodeList,                           // 动画节点列表
+        durationList: 0.3                             // 动画时间列表
+    });
+});
+</code></pre>
+<p>上述例子是一个最简单的实现，会在0.3秒内让nodeList的数字从 000000 滚动到 123456 。</p>
+<h2 id="api-">API手册</h2>
+<h3 id="-">配置参数说明</h3>
+<ul>
+<li><p>nodeList {HTMLNodeList}</p>
+<p>  动画DOM节点数组，必选。</p>
+</li>
+<li><p>durationList {Number|Array}</p>
+<p>  动画时间（秒）。必选。为Number时表示所有的节点会在相同的时间内执行完毕。如果设置不同的时间，需要设置为数组，数组长度与nodeList保持一致。</p>
+</li>
+<li><p>data {Array}</p>
+<p>  初始化数据。可选。必须为数组，数组长度与nodeList保持一致。</p>
+</li>
+<li><p>exec {Object}</p>
+<p>  初始化执行配置。可选。可设置是否自动执行以及延时时间，在data不为空时有效。</p>
+<ul>
+<li>auto：是否自动执行。默认为true </li>
+<li>delay：延时时间（秒）。默认为0.1</li>
+</ul>
+</li>
+<li><p>mode {Number}</p>
+<p>  动画模式。可选。1为循环模式，2为过渡模式。默认为1。在transition参数存在是会自动设为2。</p>
+</li>
+<li><p>uHeight {Number}</p>
+<p>  滚动单元高度。可选。默认为nodeList每个node的高度。</p>
+</li>
+<li><p>easing {String}</p>
+<p>  动画效果。可选。默认为&quot;Linear.easeNone&quot;。支持的动画效果请参考 <a href="http://kg.kissyui.com/layer-anim/2.0.0/guide/index.html#开发接口（API）">LayerAim开发接口</a></p>
+</li>
+<li><p>fixed {Number}</p>
+<p>  backgroundPositionY高度修正。可选。默认为0。 当 i 的backgroundPositionY 为 i * uHeight 时可以不设置此值，否则需要进行修正。</p>
+</li>
+<li><p>delayList {Array}</p>
+<p>  节点动画延时列表。可选。默认为0。当需要让各个节点不同时开始动画时设置，必须为数组，数组长度与nodeList保持一致。</p>
+</li>
+<li><p>rangeList {Array}    </p>
+<p>  节点动画范围列表。可选。默认为10。当数字滚动的范围不是10时设置，必须为数组，数组长度与nodeList保持一致。只在循环模式有效。例如时间节点需要设置为[6, 10]</p>
+</li>
+<li><p>transition {Object}</p>
+<p>  过渡动画对象，可选。</p>
+<ul>
+<li>minY：过渡动画图片backgroundPositionY最小高度</li>
+<li>maxY：过渡动画图片backgroundPositionY最大高度</li>
+<li>minRepeat：过渡动画最少循环个数</li>
+<li>maxRepeat：过渡动画最大循环个数</li>
+<li>duration：过渡动画单次执行时间</li>
+</ul>
+</li>
+</ul>
+<h3 id="-">方法</h3>
+<ul>
+<li><p>destroy()</p>
+<p> 销毁对象</p>
+<ul>
+<li><p>返回值：</p>
+<p> {null} </p>
+</li>
+</ul>
+</li>
+<li><p>reset(data)</p>
+<p> 重新设置数据。</p>
+<ul>
+<li><p>参数：</p>
+<p> data {Array}：新的数据数组。【可选参数，为空时为复位功能】</p>
+</li>
+<li><p>返回值：</p>
+<p> {DigitalScroll} this对象，以支持链式调用。</p>
+</li>
+</ul>
+</li>
+<li><p>start(trend)</p>
+<p> 开始播放动画。从当前显示的值滚动到数据所设置的值。</p>
+<ul>
+<li><p>参数：</p>
+<p> trend {Boolean}：是否反向播放。【可选参数，默认为false】</p>
+</li>
+<li><p>返回值：</p>
+<p> {DigitalScroll} this对象，以支持链式调用。</p>
+</li>
+</ul>
+</li>
+<li><p>stop(end)</p>
+<p> 停止（过渡）动画。</p>
+<ul>
+<li><p>参数：</p>
+<p> end {Boolean}：是否停止所有动画，直接显示最终结果。【可选参数，默认为false】</p>
+</li>
+<li><p>返回值：</p>
+<p> {DigitalScroll} this对象，以支持链式调用。</p>
+</li>
+</ul>
+</li>
+<li><p>isRunning()</p>
+<p> 返回当前动画播放状态。</p>
+<ul>
+<li><p>返回值：</p>
+<p> {Boolean} 是否正在播放。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="-">事件</h3>
+<ul>
+<li><p>error()</p>
+<p> 当参数或数据格式设置错误时，触发该事件。</p>
+</li>
+<li><p>reset()</p>
+<p> 当源数据被修改时触发该事件。</p>
+<ul>
+<li>newVal: 新值</li>
+<li>oldVal: 旧值</li>
+</ul>
+</li>
+<li><p>end()</p>
+<p> 当动画结束时触发该事件。          </p>
+</li>
+</ul>
+
+          <div style="display:none;"><script type="text/javascript" src="http://tajs.qq.com/stats?sId=36378479" charset="UTF-8"></script></div>
+          <script src="http://docs.kissyui.com/1.4/source/guideline/templates/assets/com.js"></script>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
